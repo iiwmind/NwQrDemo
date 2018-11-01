@@ -8,8 +8,8 @@
   "main": "./dist/bg/bg.js",
   "node-remote": "*://localhost/*",
   "window": {
-    "width": 1000,
-    "height": 563
+    "width": 1135,
+    "height": 700
   },
   "build": {
     "files": [

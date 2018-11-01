@@ -34,7 +34,7 @@
               clearable>
             </el-input>
             </el-form-item>
-            <el-form-item label="主字体Size">
+            <el-form-item label="主Size">
             <el-input-number
               placeholder="请输入大小px"
               :precision="2"
@@ -55,7 +55,7 @@
               clearable>
             </el-input>
             </el-form-item>
-            <el-form-item label="副字体Size">
+            <el-form-item label="副Size">
             <el-input-number
               placeholder="请输入大小px"
               :precision="2"
@@ -270,10 +270,10 @@ export default {
       filter: 'color',
       footValue: '哇咔咔',
       size: 130,
-      count: 9,
+      count: 1,
       mainTitle: 'FEDERAL MINISTRY',
       // OF TRANSPORT ATION',
-      subTitle: 'ROAD CRIME CONTROL SYSTEM',
+      subTitle: 'ROAD CRIME',
       mainTitleFontSize: 130 / 13,
       subTitleFontSize: 130 / 14,
 
@@ -286,10 +286,10 @@ export default {
       uploadLogo: null,
 
       lastNoAry: [],
-      colCount: 8,
+      colCount: 5,
 
-      tdHeight: 285,
-      tdWeight: 245
+      tdHeight: 295,
+      tdWeight: 215
     }
   },
   components: { VueQr },
@@ -349,10 +349,10 @@ export default {
     } */
   },
   mounted () {
-    this.$electron.ipcRenderer.on('printEnd', function (event, path) {
+    //this.$electron.ipcRenderer.on('printEnd', function (event, path) {
       // console.log('On printEnd: ', this, event)
-      this.printNoStart = true
-    })
+     // this.printNoStart = true
+    //})
   },
   methods: {
     getLastNoAry () {
@@ -403,12 +403,16 @@ export default {
       let rowWidth = tdWidth * this.colCount
       console.log('tdWidth: ', tdWidth, rowWidth)
       this.printNoStart = false
+
+      //var bd = document.body;
+      //bd.style.backgroundColor = "red";
       setTimeout(() => {
         // console.log('xxx')
         // this.$electron.ipcRenderer.send('printToPdf', rowWidth)
         window.print()
         setTimeout(() => {
           this.printNoStart = true
+          //bd.style.backgroundColor = "yellow";
         }, 1000)
       }, 1000)
       // let subOutputRankPrint = document.getElementById('doc')
@@ -433,8 +437,25 @@ export default {
       document.getElementById('file-uploader').click()
     },
     onChange (e) {
-      this.ipcSendFiles(e.target.files)
+      //this.ipcSendFiles(e.target.files)
+      console.log(e.target)
+
+      //console.log(e.target.files[0].path)
+      let files = e.target.files
+      let sendFiles = []
+      Array.from(files).forEach((item, index) => {
+        let obj = {
+          name: item.name,
+          path: item.path
+        }
+        // console.log('forEach', item, window.URL.createObjectURL(item))
+        sendFiles.push(obj)
+      })
+      // console.log('sendFiles', files)
+      this.uploadLogo = window.URL.createObjectURL(files[0])
+
       document.getElementById('file-uploader').value = ''
+      //this.uploadLogo = e.target.files[0].path
     }
 
     /*
@@ -517,11 +538,11 @@ tr {
   color: #eee;
 }
 #wrapper {
-  background: radial-gradient(
+  /* background: radial-gradient(
     ellipse at top left,
     rgba(0, 0, 0, 1) 40%,
     rgba(131, 130, 130, 0.9) 100%
-  );
+  ); */
   box-sizing: border-box;
   height: 700px;
   padding: 10px 10px;
@@ -567,6 +588,8 @@ main > div {
   /* background: #1d1c1c; */
   background: #fff;
   min-height: 410px;
+  width: 1124px;
+  overflow: hidden;
 }
 
 .fake-title-bar {
