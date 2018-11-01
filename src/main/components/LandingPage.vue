@@ -1,13 +1,7 @@
 <template>
   <div id="wrapper">
 
-    <div v-if="printNoStart" class="fake-title-bar">
-      QRCode - {{ version }}
-      <div class="handle-bar" v-if="os === 'win32'">
-        <i class="el-icon-minus" @click="minimizeWindow"></i>
-        <i class="el-icon-close" @click="closeWindow"></i>
-      </div>
-    </div>
+
 
     <img v-if="printNoStart" id="logo" src="~@/assets/logo.png" alt="electron-vue">
     <main>
@@ -266,7 +260,7 @@ export default {
       subTitleColor: 'black',
       mainTitleColor: 'black',
 
-      imagePath: require('../assets/test2.png'),
+      imagePath: require('../assets/qrlogo.jpg'),
       filter: 'color',
       footValue: '哇咔咔',
       size: 130,
@@ -409,7 +403,7 @@ export default {
       setTimeout(() => {
         // console.log('xxx')
         // this.$electron.ipcRenderer.send('printToPdf', rowWidth)
-        window.print()
+        window.print({shouldPrintBackgrounds: true, headerFooterEnabled:false})
         setTimeout(() => {
           this.printNoStart = true
           //bd.style.backgroundColor = "yellow";
@@ -503,6 +497,13 @@ tr {
   #qr-table {
     page-break-before: always;
   }
+
+  body {-webkit-print-color-adjust: exact;}  /*此处：显示背景图片*/
+
+  @page {
+      size: auto;  /* auto is the initial value 此处去掉页眉页脚*/
+      margin: 0mm; /* this affects the margin in the printer settings */
+    }
 }
 .whiteTitle {
   font-size: 4vw;

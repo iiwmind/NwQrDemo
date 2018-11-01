@@ -1,15 +1,15 @@
 {
-  "name": "nwdemo",
-  "label": "Nwdemo",
+  "name": "QRCode",
+  "label": "QRCode",
   "description": "A nwjs-vue application",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "lm0xfffe <iiw.mind@gmail.com>",
   "private": true,
   "main": "./dist/bg/bg.js",
   "node-remote": "*://localhost/*",
   "window": {
     "width": 1135,
-    "height": 700
+    "height": 800
   },
   "build": {
     "files": [
